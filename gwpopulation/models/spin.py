@@ -21,7 +21,7 @@ def iid_spin_magnitude_beta(dataset, amax=1, alpha_chi=1, beta_chi=1):
 
 
 def independent_spin_magnitude_beta(
-    dataset, alpha_chi_1, alpha_chi_2, beta_chi_1, beta_chi_2, amax_1, amax_2
+        dataset, alpha_chi_1, alpha_chi_2, beta_chi_1, beta_chi_2, amax_1, amax_2
 ):
     """Independent beta distributions for both spin magnitudes.
 
@@ -78,4 +78,10 @@ def independent_spin_orientation_gaussian_isotropic(dataset, xi_spin, sigma_1, s
     prior = (1 - xi_spin) / 4 + xi_spin * truncnorm(
         dataset["cos_tilt_1"], 1, sigma_1, 1, -1
     ) * truncnorm(dataset["cos_tilt_2"], 1, sigma_2, 1, -1)
+    return prior
+
+
+def agn_spin(dataset, sigma_1, sigma_12):
+    prior = truncnorm(dataset["cos_tilt_1"], 1, sigma_1, 1, -1) * \
+            truncnorm(dataset["cos_theta12"], 1, sigma_12, 1, -1)
     return prior
