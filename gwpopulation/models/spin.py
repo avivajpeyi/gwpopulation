@@ -81,7 +81,9 @@ def independent_spin_orientation_gaussian_isotropic(dataset, xi_spin, sigma_1, s
     return prior
 
 
-def agn_spin(dataset, sigma_1, sigma_12):
-    prior = truncnorm(dataset["cos_tilt_1"], 1, sigma_1, 1, -1) * \
-            truncnorm(dataset["cos_theta_12"], 1, sigma_12, 1, -1)
+def agn_spin(dataset, sigma_1, sigma_12, xi_spin=1):
+    """cos_theta_12: angle bw BH1 and BH2"""
+    prior = (1 - xi_spin) / 4 + xi_spin \
+            * truncnorm(xx=dataset["cos_tilt_1"], mu=1, sigma=sigma_1, high=1, low=-1)\
+            * truncnorm(xx=dataset["cos_theta_12"], mu=1, sigma=sigma_12, high=1, low=-1)
     return prior

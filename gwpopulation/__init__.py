@@ -59,9 +59,9 @@ def disable_cupy():
 def enable_cupy():
     try:
         import cupy as cp
+        print("Using cupy.")
     except ImportError:
         import numpy as cp
-
         print("Cannot import cupy, falling back to numpy.")
     for module in __all_with_xp:
         module.xp = cp
