@@ -1,4 +1,4 @@
-from ..utils import beta_dist, truncnorm
+from ..utils import beta_dist, truncnorm, uniform
 
 
 def iid_spin(dataset, xi_spin, sigma_spin, amax, alpha_chi, beta_chi):
@@ -89,7 +89,8 @@ def agn_spin(dataset, sigma_1, sigma_12):
 
 def agn_mixture_model_spin(dataset, sigma_1, sigma_2, sigma_12, xi_spin):
     """cos_theta_12: angle bw BH1 and BH2"""
-    agn_prior = truncnorm(xx=dataset["cos_theta_12"], mu=1, sigma=sigma_12, high=1, low=-1)
+    agn_prior = truncnorm(xx=dataset["cos_theta_12"], mu=1, sigma=sigma_12, high=1, low=-1) \
+        * uniform(high=1, low=-1) # cos tilt 1 prior
     field_prior = truncnorm(xx=dataset["cos_tilt_1"], mu=1, sigma=sigma_1, high=1, low=-1) \
                 * truncnorm(xx=dataset["cos_tilt_2"], mu=1, sigma=sigma_2, high=1, low=-1)
     return xi_spin * agn_prior + (1-xi_spin) * field_prior

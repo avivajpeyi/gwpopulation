@@ -46,6 +46,9 @@ def truncnorm(xx, mu, sigma, high, low):
     return prob
 
 
+def uniform(high, low):
+    return 1/(high - low)
+
 def get_version_information():
     version_file = os.path.join(os.path.dirname(__file__), ".version")
     try:
